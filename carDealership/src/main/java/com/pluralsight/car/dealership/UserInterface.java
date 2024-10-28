@@ -20,7 +20,7 @@ public class UserInterface {
                  processGetAllVehiclesRequest();
                  break;
              case "2":
-                 System.out.println("Find Vehicles Within a Price Range");
+                 processGetByPriceRequest();
                  break;
              case "3":
                  System.out.println("Find Vehicles by make / model");
@@ -70,6 +70,11 @@ public class UserInterface {
         return scanner.nextLine().trim();
     }
 
+    private String promptMethod(String prompt){
+        System.out.println(prompt);
+        return scanner.nextLine().trim();
+    }
+
     private void displayDealershipMenu() {
         System.out.println("""
                 1 ) List all Vehicles
@@ -92,8 +97,11 @@ public class UserInterface {
     }
 
     public void processGetByPriceRequest(){
-        ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByPrice();
-        displayVehicles();
+        int min = Integer.parseInt(promptMethod("Enter minimum Value"));
+        int max = Integer.parseInt(promptMethod("Enter maximum Value"));
+
+        ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByPrice(min,max);
+        displayVehicles(vehicles);
     }
 
     public void processGetByMakeModelRequest(){
