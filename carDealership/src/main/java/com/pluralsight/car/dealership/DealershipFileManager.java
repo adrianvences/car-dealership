@@ -1,7 +1,6 @@
 package com.pluralsight.car.dealership;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class DealershipFileManager {
@@ -59,6 +58,35 @@ public class DealershipFileManager {
     }
 
     public void saveDealership(Dealership dealerShip){
+        try  {
+            File file = new File("src/main/resources/Data/inventory.csv");
+            boolean isNewFile = !file.exists() || file.length() == 0;
+            FileWriter fileWriter = new FileWriter(file, true);
+            BufferedWriter buffWriter = new BufferedWriter(fileWriter);
+
+
+
+            // Write dealership info
+            buffWriter.write( dealerShip.getName() + "|" + dealerShip.getAddress() + "|" + dealerShip.getPhoneNumber());
+            buffWriter.newLine();
+
+            // Write vehicles
+            for (Vehicle vehicle : dealerShip.getAllVehicles()) {
+                buffWriter.write(vehicle.getVin() + "|" +
+                        vehicle.getYear() + "|" +
+                        vehicle.getMake() + "|" +
+                        vehicle.getModel() + "|" +
+                        vehicle.getVehicleType() + "|" +
+                        vehicle.getColor() + "|" +
+                        vehicle.getOdometer() + "|" +
+                        vehicle.getPrice());
+                buffWriter.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving dealership to file");
+            e.printStackTrace();
+        }
+
 
     }
 

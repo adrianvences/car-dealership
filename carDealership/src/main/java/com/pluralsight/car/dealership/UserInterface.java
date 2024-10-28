@@ -23,19 +23,19 @@ public class UserInterface {
                  processGetByPriceRequest();
                  break;
              case "3":
-                 System.out.println("Find Vehicles by make / model");
+                 processGetByMakeModelRequest();
                  break;
              case "4":
-                 System.out.println("Find vehicles by color");
+                 processGetByColorRequest();
                  break;
              case "5":
-                 System.out.println("Find vehicles by mileage range");
+                 processGetByMileageRequest();
                  break;
              case "6":
-                 System.out.println("Find vehicles by type (car, truck, SUV, van)");
+                 processGetByVehicleTypeRequest();
                  break;
              case "7":
-                 System.out.println("Find vehicles by year range");
+                 processGetByYearRequest();
                  break;
              case "8":
                  System.out.println("Add a vehicle");
@@ -105,23 +105,38 @@ public class UserInterface {
     }
 
     public void processGetByMakeModelRequest(){
-
+        String userMakeQuery = promptMethod("What car make are you looking for?");
+        String userModelQuery = promptMethod("What car model are you looking for?");
+        ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByMakeModel(userMakeQuery,userModelQuery);
+        displayVehicles(vehicles);
     }
 
     public void processGetByYearRequest(){
+        int min = Integer.parseInt(promptMethod("Enter minimum year"));
+        int max = Integer.parseInt(promptMethod("Enter maximum year"));
 
+        ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByYear(min,max);
+        displayVehicles(vehicles);
     }
 
     public void processGetByColorRequest(){
-
+        String colorQuery = promptMethod("Enter vehicle color.");
+        ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByColor(colorQuery);
+        displayVehicles(vehicles);
     }
 
     public void processGetByMileageRequest(){
+        int min = Integer.parseInt(promptMethod("Enter minimum mileage"));
+        int max = Integer.parseInt(promptMethod("Enter maximum mileage"));
 
+        ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByMileage(min,max);
+        displayVehicles(vehicles);
     }
 
     public void processGetByVehicleTypeRequest(){
-
+        String vehicleTypeQuery = promptMethod(" Enter vehicle by type (car, truck, SUV, van)");
+        ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByType(vehicleTypeQuery);
+        displayVehicles(vehicles);
     }
 
     public void processGetAllVehiclesRequest(){
@@ -139,6 +154,9 @@ public class UserInterface {
     }
 
     public void processRemoveVehicleRequest(){
+        String vinQueryToDelete = promptMethod("Insert VIN number for vehicle that you want to delete.");
+        Vehicle vehicle = this.dealership.findVehicleByVin(Integer.parseInt(vinQueryToDelete));
+
 
     }
 

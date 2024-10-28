@@ -41,37 +41,112 @@ public class Dealership {
                 filteredVehiclesByPrice.add(vehicle);
             }
         }
+        noMatchCaseHandling(filteredVehiclesByPrice);
 
         return filteredVehiclesByPrice; // Return the filtered list
     }
 
-    public List<Vehicle> getVehiclesByMakeModel(String make, String model){
-        return null;
+    public ArrayList<Vehicle> getVehiclesByMakeModel(String make, String model){
+        ArrayList<Vehicle> filteredVehiclesByMakeModel = new ArrayList<>();
+
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getMake().equalsIgnoreCase(make) && vehicle.getModel().equalsIgnoreCase(model)){
+                filteredVehiclesByMakeModel.add(vehicle);
+            }
+        }
+        noMatchCaseHandling(filteredVehiclesByMakeModel);
+        return filteredVehiclesByMakeModel;
     }
 
-    public List<Vehicle> getVehiclesByYear(int min, int max) {
-        return null;
+    public ArrayList<Vehicle> getVehiclesByYear(int min, int max) {
+        ArrayList<Vehicle> filteredVehiclesByYear = new ArrayList<>();
+
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getYear() >= min && vehicle.getYear() <= max) {
+                filteredVehiclesByYear.add(vehicle);
+            }
+        }
+        noMatchCaseHandling(filteredVehiclesByYear);
+
+        return filteredVehiclesByYear;
+
     }
 
-    public List<Vehicle> getVehiclesByColor(String color){
-        return null;
+    public ArrayList<Vehicle> getVehiclesByColor(String color){
+        ArrayList<Vehicle> filteredVehiclesByColor = new ArrayList<>();
+        for (Vehicle vehicle : inventory) {
+            if(vehicle.getColor().equalsIgnoreCase(color)){
+                filteredVehiclesByColor.add(vehicle);
+            }
+        }
+        noMatchCaseHandling(filteredVehiclesByColor);
+
+        return filteredVehiclesByColor;
     }
 
-    public List<Vehicle> getVehiclesByMileage(int min, int max) {
-        return null;
+    public ArrayList<Vehicle> getVehiclesByMileage(int min, int max) {
+        ArrayList<Vehicle> filteredVehiclesByMileage = new ArrayList<>();
+        for(Vehicle vehicle : inventory){
+            if(vehicle.getOdometer() >= min && vehicle.getOdometer() <= max) {
+                filteredVehiclesByMileage.add(vehicle);
+            }
+        }
+        noMatchCaseHandling(filteredVehiclesByMileage);
+        return filteredVehiclesByMileage;
     }
 
-    public List<Vehicle> getVehiclesByType(String vehicleType) {
-        return null;
+    public ArrayList<Vehicle> getVehiclesByType(String vehicleType) {
+        ArrayList<Vehicle> filteredVehiclesByType = new ArrayList<>();
+        for(Vehicle vehicle : inventory) {
+            if(vehicle.getVehicleType().equalsIgnoreCase(vehicleType)){
+                filteredVehiclesByType.add(vehicle);
+            }
+        }
+        noMatchCaseHandling(filteredVehiclesByType);
+        return filteredVehiclesByType;
     }
 
-    public void removeVehicle(Vehicle vehicle){
+    public Vehicle findVehicleByVin(int vin){
+        Vehicle vehicle = null;
+        for(Vehicle v : inventory) {
+            if(vehicle.getVin() == v.getVin()) {
+                vehicle = v;
+            }
+        }
+        return vehicle;
+    }
 
+    public void removeVehicle(Vehicle v){
+
+        inventory.remove(v);
+
+    }
+
+    public void noMatchCaseHandling(ArrayList<Vehicle> vehicles){
+        if(vehicles.toArray().length < 1) {
+            System.out.println("No matching vehicles.");
+        }
     }
 
     @Override
     public String toString() {
         return String.format("Dealership: %s, Address: %s, Phone Number: %s \n Inventory: \n%s",
                 name,address,phoneNumber,inventory);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public ArrayList<Vehicle> getInventory() {
+        return inventory;
     }
 }
