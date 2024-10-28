@@ -25,9 +25,6 @@ public class Dealership {
             System.out.println("No vehicles available at the moment.");
         } else {
             System.out.println("Vehicles available at " + name + ": ");
-            for(Vehicle vehicle : inventory){
-                System.out.println(vehicle);
-            }
 
         }
         return inventory;
@@ -109,7 +106,7 @@ public class Dealership {
     public Vehicle findVehicleByVin(int vin){
         Vehicle vehicle = null;
         for(Vehicle v : inventory) {
-            if(vehicle.getVin() == v.getVin()) {
+            if(v.getVin() == vin) {
                 vehicle = v;
             }
         }

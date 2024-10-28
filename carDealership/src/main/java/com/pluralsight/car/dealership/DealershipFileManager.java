@@ -61,7 +61,7 @@ public class DealershipFileManager {
         try  {
             File file = new File("src/main/resources/Data/inventory.csv");
             boolean isNewFile = !file.exists() || file.length() == 0;
-            FileWriter fileWriter = new FileWriter(file, true);
+            FileWriter fileWriter = new FileWriter(file);
             BufferedWriter buffWriter = new BufferedWriter(fileWriter);
 
 
@@ -82,6 +82,7 @@ public class DealershipFileManager {
                         vehicle.getPrice());
                 buffWriter.newLine();
             }
+            buffWriter.close();
         } catch (IOException e) {
             System.out.println("Error saving dealership to file");
             e.printStackTrace();

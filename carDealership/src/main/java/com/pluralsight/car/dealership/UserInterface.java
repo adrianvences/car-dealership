@@ -7,6 +7,10 @@ public class UserInterface {
 
     Dealership dealership;
     static Scanner scanner = new Scanner(System.in);
+    DealershipFileManager fileManager;
+
+
+
     public void display(){
      init();
      String choice;
@@ -38,10 +42,10 @@ public class UserInterface {
                  processGetByYearRequest();
                  break;
              case "8":
-                 System.out.println("Add a vehicle");
+                 processAddVehicleRequest();
                  break;
              case "9":
-                 System.out.println("Remove a vehicle");
+                 processRemoveVehicleRequest();
                  break;
              case "x":
                  System.out.println("Quit");
@@ -55,7 +59,7 @@ public class UserInterface {
     }
 
     private void init(){
-        DealershipFileManager fileManager = new DealershipFileManager();
+        fileManager = new DealershipFileManager();
         this.dealership = fileManager.getDealership();
 
         if(this.dealership != null){
@@ -150,14 +154,36 @@ public class UserInterface {
     }
 
     public void processAddVehicleRequest(){
-
+        Vehicle vehicle = displayAddVehiclePrompt();
+        this.dealership.addVehicle(vehicle);
+        fileManager.saveDealership(this.dealership);
     }
 
     public void processRemoveVehicleRequest(){
         String vinQueryToDelete = promptMethod("Insert VIN number for vehicle that you want to delete.");
         Vehicle vehicle = this.dealership.findVehicleByVin(Integer.parseInt(vinQueryToDelete));
+        this.dealership.removeVehicle(vehicle);
+        fileManager.saveDealership(this.dealership);
 
 
+    }
+
+    public Vehicle displayAddVehiclePrompt(){
+        String vehicleVin = promptMethod("Enter Vehicle VIN.");
+        String vehicleYear = promptMethod("Enter Vehicle Year.");
+        String vehicleMake = promptMethod("Enter Vehicle Make.");
+        String vehicleModel = promptMethod("Enter Vehicle Model.");
+        String vehicleType = promptMethod("Enter Vehicle Type.");
+        String vehicleColor = promptMethod("Enter Vehicle Color.");
+        String vehicleOdometer = promptMethod("Enter Vehicle Mileage.");
+        String vehiclePrice = promptMethod("Enter Vehicle Price.");
+
+        int vehicleVinInt = Integer.parseInt(vehicleVin);
+        int vehicleYearInt = Integer.parseInt(vehicleYear);
+        int vehicleOdometerInt = Integer.parseInt(vehicleOdometer);
+        int vehiclePriceInt = Integer.parseInt(vehiclePrice);
+
+        return new Vehicle(vehicleVinInt,vehicleYearInt,vehicleMake,vehicleModel,vehicleType,vehicleColor,vehicleOdometerInt,vehiclePriceInt);
     }
 
 
