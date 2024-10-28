@@ -20,7 +20,7 @@ public class Dealership {
         inventory.add(vehicle);
     }
 
-    public void getAllVehicles(){
+    public ArrayList<Vehicle> getAllVehicles(){
         if(inventory.isEmpty()){
             System.out.println("No vehicles available at the moment.");
         } else {
@@ -28,11 +28,21 @@ public class Dealership {
             for(Vehicle vehicle : inventory){
                 System.out.println(vehicle);
             }
+
         }
+        return inventory;
     }
 
-    public List<Vehicle> getVehiclesByPrice(int min, int max){
-        return null;
+    public ArrayList<Vehicle> getVehiclesByPrice(int min, int max){
+        ArrayList<Vehicle> filteredVehiclesByPrice = new ArrayList<>();
+
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getPrice() >= min && vehicle.getPrice() <= max) {
+                filteredVehiclesByPrice.add(vehicle);
+            }
+        }
+
+        return filteredVehiclesByPrice; // Return the filtered list
     }
 
     public List<Vehicle> getVehiclesByMakeModel(String make, String model){
@@ -57,5 +67,11 @@ public class Dealership {
 
     public void removeVehicle(Vehicle vehicle){
 
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Dealership: %s, Address: %s, Phone Number: %s \n Inventory: \n%s",
+                name,address,phoneNumber,inventory);
     }
 }
