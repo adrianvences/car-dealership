@@ -1,6 +1,8 @@
 package com.pluralsight.car.dealership;
 
 public class Vehicle {
+
+    //Vehicle fields
     private int vin;
     private int year;
     private String make;
@@ -10,6 +12,8 @@ public class Vehicle {
     private int odometer;
     private double price;
 
+
+    // Vehicle constructor
     public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
         this.vin = vin;
         this.year = year;
@@ -21,6 +25,7 @@ public class Vehicle {
         this.price = price;
     }
 
+    // Getters and setters
     public int getVin() {
         return vin;
     }

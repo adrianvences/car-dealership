@@ -4,13 +4,18 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class DealershipFileManager {
+
+    // Gets data from csv file and create a dealership along with inventory
     public Dealership getDealership(){
         ArrayList<Vehicle> inventory = new ArrayList<>();
         Dealership dealership = null;
 
+        // finds file to read
         try {
+            // Create a FileReader to read the contents of the "inventory.csv" file located in the "src/main/resources/Data" directory.
             FileReader fileReader = new FileReader("src/main/resources/Data/inventory.csv");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
+            // temporarily stores data from file.
             String input;
 
             // reads first line of dealership file
@@ -31,7 +36,7 @@ public class DealershipFileManager {
                 return null;
             }
 
-
+            // reads each line of file after header
             while((input = bufferedReader.readLine()) != null){
                 String[] vehicleData = input.split("\\|");
                 int vin = Integer.parseInt(vehicleData[0]);
@@ -43,11 +48,15 @@ public class DealershipFileManager {
                 int odometer = Integer.parseInt(vehicleData[6]);
                 double price = Double.parseDouble(vehicleData[7]);
 
+                // initialize each vehicle object
                 Vehicle vehicle = new Vehicle(vin,year,make,model,vehicleType,color,odometer,price);
+                // adds vehicle object to inventory
                 inventory.add(vehicle);
 
             }
+            // closes reader to prevent memory leaks
             bufferedReader.close();
+            // returns dealership that other methods can use.
             return dealership;
         } catch (Exception e) {
             System.out.println("error reading file");
@@ -57,14 +66,13 @@ public class DealershipFileManager {
         return dealership;
     }
 
+    //rewrites csv file to update it.
     public void saveDealership(Dealership dealerShip){
         try  {
             File file = new File("src/main/resources/Data/inventory.csv");
             boolean isNewFile = !file.exists() || file.length() == 0;
             FileWriter fileWriter = new FileWriter(file);
             BufferedWriter buffWriter = new BufferedWriter(fileWriter);
-
-
 
             // Write dealership info
             buffWriter.write( dealerShip.getName() + "|" + dealerShip.getAddress() + "|" + dealerShip.getPhoneNumber());
